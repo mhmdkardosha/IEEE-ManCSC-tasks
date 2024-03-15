@@ -1,0 +1,12 @@
+{
+    "files.autoSave": "onFocusChange",
+    "editor.snippetSuggestions": "inline",
+    "editor.suggest.showInlineDetails": false,
+    "editor.suggest.showKeywords": false,
+    "editor.suggest.showModules": false,
+    "editor.suggest.showProperties": false,
+    "editor.suggest.showReferences": false,
+    "editor.suggest.showSnippets": false,
+    "editor.suggest.showTypeParameters": false,
+    "editor.suggestSelection": "first"
+}
