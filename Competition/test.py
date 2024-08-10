@@ -4,11 +4,20 @@ import pickle
 from PIL import Image
 import numpy as np
 from datetime import datetime
+import requests
+from PIL import Image
+import streamlit as st
+from io import BytesIO
 
 st.header('Premier League matches prediction')
-image = Image.open(r"C:\Users\deel\Downloads\premier_league.jpg")
-st.image(image, caption='Premier League logo', use_column_width=True)
+image_url = "https://static.dezeen.com/uploads/2016/08/designstudiopremier-league-rebrand-relaunch-logo-design-barclays-football_dezeen_slideshow-a-852x609.jpg"
 
+# Download the image
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
+
+# Display the image in Streamlit
+st.image(image, caption='Premier League logo', use_column_width=True)
 st.write('''
 - This app predicts the result of a Premier League match.
 - The model is trained using data from the 2018/2019 to 2023/2024 season.
