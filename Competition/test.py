@@ -36,18 +36,22 @@ def calculate_features(data, historical_data):
         data['time_condition'] = 'evening'
 
     # Calculate days since last match
-    last_match_date = historical_data[historical_data['team'] == data['team']]['date'].max()
-    data['days_since_last_match'] = (match_datetime.date() - pd.to_datetime(last_match_date).date()).days
+    last_match_date = historical_data[historical_data['team']
+                                      == data['team']]['date'].max()
+    data['days_since_last_match'] = (
+        match_datetime.date() - pd.to_datetime(last_match_date).date()).days
 
     # Calculate rolling averages and other metrics from historical data
-    recent_matches = historical_data[historical_data['team'] == data['team']].sort_values('date').tail(5)
+    recent_matches = historical_data[historical_data['team']
+                                     == data['team']].sort_values('date').tail(5)
     data['rolling_xg'] = recent_matches['xg'].mean()
     data['rolling_xga'] = recent_matches['xga'].mean()
     data['rolling_poss'] = recent_matches['poss'].mean()
     data['rolling_sh'] = recent_matches['sh'].mean()
     data['rolling_sot'] = recent_matches['sot'].mean()
     data['rolling_dist'] = recent_matches['dist'].mean()
-    data['rolling_goal_diff'] = (recent_matches['gf'] - recent_matches['ga']).mean()
+    data['rolling_goal_diff'] = (
+        recent_matches['gf'] - recent_matches['ga']).mean()
 
     # Calculate form
     recent_results = recent_matches['result'].map({'W': 3, 'D': 1, 'L': 0})
@@ -56,8 +60,9 @@ def calculate_features(data, historical_data):
     # Calculate head-to-head record
     h2h_matches = historical_data[
         ((historical_data['team'] == data['team']) & (historical_data['opponent'] == data['opponent'])) |
-        ((historical_data['team'] == data['opponent']) & (historical_data['opponent'] == data['team']))
-        ].sort_values('date').tail(5)
+        ((historical_data['team'] == data['opponent']) &
+         (historical_data['opponent'] == data['team']))
+    ].sort_values('date').tail(5)
     data['h2h_record'] = h2h_matches[h2h_matches['team'] == data['team']]['result'].map(
         {'W': 1, 'D': 0.5, 'L': 0}).mean()
 
@@ -122,5 +127,7 @@ with open(r'D:\IEEE ManCSC-tasks\Competition\grad_boost.pkl', 'rb') as f:
         st.write('The home team will lose the match.')
 
     # Ensure probabilities sum to 1
-    st.write('Probability of home team winning: {:.2f}%'.format(pred_prob[0][1] * 100))
-    st.write('Probability of home team losing: {:.2f}%'.format(pred_prob[0][0] * 100))
+    st.write('Probability of home team winning: {:.2f}%'.format(
+        pred_prob[0][1] * 100))
+    st.write('Probability of home team losing: {:.2f}%'.format(
+        pred_prob[0][0] * 100))
