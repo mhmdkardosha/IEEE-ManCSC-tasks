@@ -111,8 +111,9 @@ input_data['formation'] = st.selectbox('Expected home team formation',
                                         '4-3-1-2', '4-4-2', '4-2-2-2', '3-4-1-2', '3-5-2', '4-1-4-1',
                                         '5-4-1', '3-3-3-1', '4-3-2-1', '5-3-2', '3-5-1-1', '4-1-3-2',
                                         '4-5-1', '3-2-4-1', '4-2-4'))
-captains = pd.read_excel("captains.xlsx")
-input_data['captain'] = st.selectbox('Home Team Captain', captains['captain'])
+captains = pd.read_csv("captains.csv")
+input_data['captain'] = st.selectbox(
+    'Home Team Captain', captains[captains['team'] == input_data['team']]['captain'].values)
 
 old_data = pd.read_csv("matches_final.csv")
 
