@@ -111,10 +111,10 @@ input_data['formation'] = st.selectbox('Expected home team formation',
                                         '4-3-1-2', '4-4-2', '4-2-2-2', '3-4-1-2', '3-5-2', '4-1-4-1',
                                         '5-4-1', '3-3-3-1', '4-3-2-1', '5-3-2', '3-5-1-1', '4-1-3-2',
                                         '4-5-1', '3-2-4-1', '4-2-4'))
-captains = pd.read_excel(r"D:\IEEE ManCSC-tasks\Competition\captains.xlsx")
+captains = pd.read_excel("captains.xlsx")
 input_data['captain'] = st.selectbox('Home Team Captain', captains['captain'])
 
-old_data = pd.read_csv(r"D:\IEEE ManCSC-tasks\Competition\matches_final.csv")
+old_data = pd.read_csv("matches_final.csv")
 
 # Calculate additional features
 result = calculate_features(input_data, old_data)
@@ -123,7 +123,7 @@ input_data = pd.DataFrame(input_data, index=[0])
 result = pd.DataFrame(result, index=[0])
 features = pd.concat([input_data, result], axis=0)
 
-with open(r'D:\IEEE ManCSC-tasks\Competition\grad_boost.pkl', 'rb') as f:
+with open('grad_boost.pkl', 'rb') as f:
     model = pickle.load(f)
 
     pred_prob = model.predict_proba(features)
